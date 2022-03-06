@@ -18,18 +18,16 @@ const Today = () => {
         },
       })
       .then((res) => setAnimalsToday(res.data.results));
+
   },[]);
 
   return (
     <div>
-    <button>Предыдущая</button>
-    <button >Следующая</button>
       <p><h1>Сегодня</h1></p>
       {animalsToday.map((item) => (
         <div key={item.id}>
-          {item.animal.name}-{item.type}-{item.time}
-          
-        </div>
+          {item.animal.name}-{item.animal.spec.name}{item.spec}-{item.type}-{item.time}
+       </div>
       ))}
     </div>
   );

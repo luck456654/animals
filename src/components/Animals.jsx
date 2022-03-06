@@ -1,17 +1,28 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 
+let limit=5;
+let offset=1;
 const Animals = () => {
-  const [animalsToday, setAnimalsTodayanimalsToday] = useState([]);
-  const token = localStorage.getItem("token");
+  const [animalsToday, setAnimalsToday] = useState([]);
+    const token = localStorage.getItem("token");
   const url = "https://acits-test-back.herokuapp.com/api/animals";
   
   useEffect(() => {
-    axios
+    loadAnimals()
+  },[]);
+
+  useEffect(() => {
+    loadAnimals()
+  },[offset]);
+ 
+ 
+function loadAnimals(){
+  axios
       .get(url, {
         params:{
-          limit:5,
-          offset:0
+          limit:limit,
+          offset:Number(offset)
         },
         headers: {
           Authorization: "Bearer " + token,
@@ -20,35 +31,17 @@ const Animals = () => {
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
         },
       })
-      .then((res) => setAnimalsTodayanimalsToday(res.data.results));
+      .then((res) => setAnimalsToday(res.data.results));
       console.log(animalsToday)
-  },[]);
- 
- 
- 
-  const [animalsLimited, setAnimalsLimited] = useState([]);
-  function offsetAnimals(){
-  const url = "https://acits-test-back.herokuapp.com/api/animals";
-  axios
-  .get(url, {
-    params:{
-      limit:5,
-      offset:2,
-    },
-    headers: {
-      Authorization: "Bearer " + token,
-      dataType: "json",
-      "Access-Control-Allow-Origin": url,
-      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE",
-    },
-  })
-  .then((res) => setAnimalsLimited(res.data.results));
-  }
+    }
+  
   
   return (
     <div>
-      <div></div>
-      Животные
+    <h1>Животные</h1>
+    <button onClick={offset=offset-1}>Предыдущая</button>
+    <button onClick={offset=offset+1}>Следующая</button>
+      
       {animalsToday.map((item) => (
         <div key={item.id}>
           {item.name}
