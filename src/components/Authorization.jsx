@@ -13,8 +13,9 @@ function Authorization() {
   const navigate = useNavigate();
   useEffect(() => {
     if (token) {
+      localStorage.setItem('token',token)
       history.push("/home");
-      navigate('/home')
+      navigate('/home');
       }
     else{
         alert("Вы не авторизованны");
