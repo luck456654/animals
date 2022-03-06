@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import "./Today.css";
 
 const Today = () => {
   const [animalsToday, setAnimalsToday] = useState([]);
@@ -17,14 +18,17 @@ const Today = () => {
         },
       })
       .then((res) => setAnimalsToday(res.data.results));
-  });
+  },[]);
 
   return (
     <div>
-      Сегодня
+    <button>Предыдущая</button>
+    <button >Следующая</button>
+      <p><h1>Сегодня</h1></p>
       {animalsToday.map((item) => (
         <div key={item.id}>
           {item.animal.name}-{item.type}-{item.time}
+          
         </div>
       ))}
     </div>

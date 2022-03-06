@@ -1,0 +1,7 @@
+.prev,.next{
+  background-color: blueviolet;
+  width: 250px;
+  height: 50px;
+  color: aliceblue;
+  font-size: 14px;
+}
