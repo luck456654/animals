@@ -18,7 +18,7 @@ function Authorization() {
       navigate('/home');
       }
     else{
-        alert("Вы не авторизованны");
+        
     }
   }, [token]);
 

@@ -1,28 +1,30 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 
-let limit=5;
-let offset=1;
 const Animals = () => {
+  const [limit] = useState(5);
+  const [offset, setoffset] = useState(0);
+  const [dataName, setDataName] = useState();
+  const [dataSpecName, setDataSpecName] = useState();
+  const [dataAge, setDataAge] = useState();
+  const [dataHeight, setDataHeight] = useState();
+  const [dataWeight, setDataWeight] = useState();
+
   const [animalsToday, setAnimalsToday] = useState([]);
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
   const url = "https://acits-test-back.herokuapp.com/api/animals";
-  
-  useEffect(() => {
-    loadAnimals()
-  },[]);
 
   useEffect(() => {
-    loadAnimals()
-  },[offset]);
- 
- 
-function loadAnimals(){
-  axios
+    loadAnimals();
+    
+  }, [offset]);
+
+  function loadAnimals() {
+    axios
       .get(url, {
-        params:{
-          limit:limit,
-          offset:Number(offset)
+        params: {
+          limit,
+          offset,
         },
         headers: {
           Authorization: "Bearer " + token,
@@ -32,22 +34,34 @@ function loadAnimals(){
         },
       })
       .then((res) => setAnimalsToday(res.data.results));
-      console.log(animalsToday)
-    }
-  
-  
+
+   
+    
+  }
+  function callCardsAnimals(e, item){
+    setDataName(item.name)
+    setDataSpecName(item.spec.name)
+    setDataAge(item.age)
+    setDataHeight(item.height+item.heightUnit)
+    setDataWeight(item.weight+item.weightUnit)
+  }
+
   return (
     <div>
-    <h1>Животные</h1>
-    <button onClick={offset=offset-1}>Предыдущая</button>
-    <button onClick={offset=offset+1}>Следующая</button>
-      
+      <h1>Животные</h1>
+
+      <button onClick={() => setoffset((offset) => (offset - limit > 0 ? offset - limit : 0))}>
+        Предыдущая
+      </button>
+      <button onClick={() => setoffset((offset) => offset + limit)} >
+        Следующая
+      </button>
+
       {animalsToday.map((item) => (
-        <div key={item.id}>
-          {item.name}
-         </div>
+        <div key={item.id} value={item.name} onClick={(e) => callCardsAnimals(e, item)}>{item.name}</div>
       ))}
-     </div>
+      {dataName}-{dataSpecName}-{dataAge}-{dataHeight}-{dataWeight}
+    </div>
   );
 };
 
