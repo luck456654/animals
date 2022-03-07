@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import "./Today.css";
+
 
     
 
@@ -33,17 +33,27 @@ const Today = () => {
     setDataAge(item.animal.age)
     setDataHeight(item.animal.height+item.animal.heightUnit)
     setDataWeight(item.animal.weight+item.animal.weightUnit)
+
+    let form = document.querySelector(".dataAnimal")
+    form.style.display="block";
+  }
+  function closeForm(){
+    let form = document.querySelector(".dataAnimal")
+    form.style.display="none";
   }
   return (
     <div>
-      <p><h1>Сегодня</h1></p>
+      <p><h1 className="title">Сегодня</h1></p>
       {animalsToday.map((item) => (
         <div key={item.id} onClick={(e) => callCardsAnimals(e, item)}>
           {item.animal.name}-{item.animal.spec.name}{item.spec}-{item.type}-{item.time}
        </div>
        ))}
-       <h2>Данные о животном</h2>
+       <div className="dataAnimal">
+       <div className="close" onClick={closeForm}>x</div>
+       <h2 className="title">Данные о животном</h2>
        {dataName}-{dataSpecName}-{dataAge}-{dataHeight}-{dataWeight}
+      </div>
     </div>
   );
 };

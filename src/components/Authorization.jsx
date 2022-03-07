@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { createBrowserHistory } from 'history';
 import { useNavigate } from 'react-router-dom';
+import "./styleComponents.css";
 
 function Authorization() {
   const [login, setLogin] = useState();
@@ -45,21 +46,25 @@ function Authorization() {
   }
   return (
     <div>
+      <form className="form">
+      <h2 className="formAuth">Вы не авторизованны! Введите логин и пароль</h2>
+        <div>
       <input
         type="text"
         value={login}
         onChange={handleChangeLogin}
         placeholder="Введите логин"
-      ></input>
+      className="input"></input>
       <input
         type="text"
         value={password}
         onChange={handleChangePassword}
         placeholder="Введите пароль"
-      ></input>
-      <input type="button" value="Авторизоваться" onClick={auth}></input>
-      {token}
-    </div>
+        className="input"></input>
+      </div>
+      <p><input className="button" type="button" value="Авторизоваться" onClick={auth}></input></p>
+      </form>
+      </div>
   );
 }
 export default Authorization;

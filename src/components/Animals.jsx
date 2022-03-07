@@ -44,11 +44,16 @@ const Animals = () => {
     setDataAge(item.age)
     setDataHeight(item.height+item.heightUnit)
     setDataWeight(item.weight+item.weightUnit)
+    let form = document.querySelector(".dataAnimal")
+    form.style.display="block";
   }
-
+  function closeForm(){
+    let form = document.querySelector(".dataAnimal")
+    form.style.display="none";
+  }
   return (
     <div>
-      <h1>Животные</h1>
+      <h1 className="title">Животные</h1>
 
       <button onClick={() => setoffset((offset) => (offset - limit > 0 ? offset - limit : 0))}>
         Предыдущая
@@ -58,10 +63,19 @@ const Animals = () => {
       </button>
 
       {animalsToday.map((item) => (
-        <div key={item.id} value={item.name} onClick={(e) => callCardsAnimals(e, item)}>{item.name}</div>
+        <div key={item.id} value={item.name} onClick={(e) => callCardsAnimals(e, item)}>{item.name}-{item.spec.name}</div>
       ))}
-      {dataName}-{dataSpecName}-{dataAge}-{dataHeight}-{dataWeight}
+     <div className="dataAnimal">
+       <div className="close" onClick={closeForm}>x</div>
+       <h2 className="title">Данные о животном</h2>
+       {dataName}-{dataSpecName}-{dataAge}-{dataHeight}-{dataWeight}
+      </div>
+
+
     </div>
+
+
+
   );
 };
 
